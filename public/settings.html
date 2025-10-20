@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings | INNOMATE</title>
+  <style>
+    /* ---------- Base Styles ---------- */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #0b0b0b;
+      color: #e6e6e6;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    header {
+      background: linear-gradient(90deg, #00ff99, #00ccff);
+      color: #000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      box-shadow: 0 0 20px rgba(0, 255, 153, 0.3);
+    }
+
+    header h1 {
+      margin: 0;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    nav a {
+      color: #000;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.2s;
+    }
+
+    nav a:hover {
+      color: #333;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 3rem auto;
+      padding: 1rem;
+      display: flex;
+      gap: 2rem;
+    }
+
+    /* ---------- Sidebar ---------- */
+    .sidebar {
+      flex: 0.25;
+      background: #111;
+      border-radius: 16px;
+      padding: 1.5rem;
+      height: fit-content;
+      box-shadow: 0 0 20px rgba(0, 255, 153, 0.15);
+      position: sticky;
+      top: 30px;
+    }
+
+    .sidebar h3 {
+      color: #00ff99;
+      font-size: 1.1rem;
+      margin-bottom: 1.2rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar li {
+      margin: 1rem 0;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      color: #e6e6e6;
+      font-weight: 500;
+      transition: 0.2s;
+    }
+
+    .sidebar a:hover {
+      color: #00ff99;
+    }
+
+    /* ---------- Content Cards ---------- */
+    .settings-content {
+      flex: 0.75;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .settings-card {
+      background: #151515;
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 0 25px rgba(0, 255, 153, 0.1);
+      transition: 0.3s;
+    }
+
+    .settings-card:hover {
+      box-shadow: 0 0 35px rgba(0, 255, 153, 0.3);
+      transform: translateY(-3px);
+    }
+
+    h2 {
+      color: #00ff99;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-desc {
+      font-size: 0.95rem;
+      color: #aaa;
+      margin-bottom: 1.2rem;
+    }
+
+    label {
+      display: block;
+      margin: 0.8rem 0 0.4rem;
+      font-weight: 500;
+      color: #ddd;
+    }
+
+    select, input[type="checkbox"] {
+      background: #222;
+      color: #fff;
+      border: 1px solid #333;
+      border-radius: 10px;
+      padding: 0.6rem;
+      width: 100%;
+      font-size: 0.95rem;
+      outline: none;
+      transition: 0.2s;
+    }
+
+    select:focus {
+      border-color: #00ff99;
+      box-shadow: 0 0 10px rgba(0, 255, 153, 0.3);
+    }
+
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #1c1c1c;
+      padding: 0.6rem 1rem;
+      border-radius: 10px;
+      transition: 0.2s;
+    }
+
+    .checkbox-group label:hover {
+      background: #222;
+    }
+
+    button {
+      background-color: #00ff99;
+      color: #000;
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      margin-top: 1.5rem;
+      align-self: flex-end;
+      transition: 0.25s;
+    }
+
+    button:hover {
+      background-color: #00cc77;
+      box-shadow: 0 0 20px rgba(0, 255, 153, 0.3);
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 900px) {
+      main {
+        flex-direction: column;
+      }
+      .sidebar {
+        position: static;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>INNOMATE</h1>
+    <nav><a href="index.html">← Back to Home</a></nav>
+  </header>
+
+  <main>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h3>Settings Menu</h3>
+      <ul>
+        <li><a href="#account">Account Preferences</a></li>
+        <li><a href="#privacy">Privacy & Visibility</a></li>
+        <li><a href="#notifications">Notifications</a></li>
+        <li><a href="#networking">Networking</a></li>
+        <li><a href="#theme">Appearance</a></li>
+      </ul>
+    </div>
+
+    <!-- Settings Sections -->
+    <div class="settings-content">
+
+      <div id="account" class="settings-card">
+        <h2>Account Preferences</h2>
+        <p class="section-desc">Control your general settings and visibility on INNOMATE.</p>
+        <label for="discoverability">Discoverability</label>
+        <select id="discoverability">
+          <option>Allow others to find me by skills/interests</option>
+          <option>Connections only</option>
+          <option>Hide from public search</option>
+        </select>
+      </div>
+
+      <div id="privacy" class="settings-card">
+        <h2>Privacy & Visibility</h2>
+        <p class="section-desc">Choose who can view your activity, skills, and projects.</p>
+        <label for="profile-visibility">Profile Visibility</label>
+        <select id="profile-visibility">
+          <option>Public</option>
+          <option>Connections only</option>
+          <option>Private</option>
+        </select>
+        <label><input type="checkbox"> Hide activity status</label>
+        <label><input type="checkbox"> Hide profile from search engines</label>
+      </div>
+
+      <div id="notifications" class="settings-card">
+        <h2>Notifications</h2>
+        <p class="section-desc">Manage what updates you want to receive.</p>
+        <div class="checkbox-group">
+          <label><input type="checkbox" checked> Connection requests</label>
+          <label><input type="checkbox" checked> Project invites</label>
+          <label><input type="checkbox"> Community newsletters</label>
+          <label><input type="checkbox"> Job & internship updates</label>
+          <label><input type="checkbox" checked> Skill endorsements</label>
+        </div>
+      </div>
+
+      <div id="networking" class="settings-card">
+        <h2>Networking Preferences</h2>
+        <p class="section-desc">Tell others what kind of collaborations you’re open to.</p>
+        <div class="checkbox-group">
+          <label><input type="checkbox" checked> Open to collaboration</label>
+          <label><input type="checkbox"> Open to mentorship</label>
+          <label><input type="checkbox"> Looking for team projects</label>
+          <label><input type="checkbox"> Accepting mentees</label>
+        </div>
+      </div>
+
+      <div id="theme" class="settings-card">
+        <h2>Appearance</h2>
+        <p class="section-desc">Customize how INNOMATE looks for you.</p>
+        <label for="theme-select">Theme Mode</label>
+        <select id="theme-select">
+          <option>Dark Mode</option>
+          <option>Light Mode</option>
+          <option>System Default</option>
+        </select>
+
+        <label for="font-size">Font Size</label>
+        <select id="font-size">
+          <option>Default</option>
+          <option>Large</option>
+          <option>Extra Large</option>
+        </select>
+
+        <button>Save Changes</button>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
