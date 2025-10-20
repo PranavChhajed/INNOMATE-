@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Innomate - User Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-accent: #00ff9d;
+            --dark-bg: #121212;
+            --card-bg: #1e1e1e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            min-height: 100vh;
+            color: white;
+        }
+
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #333;
+        }
+
+        .logo h1 {
+            color: var(--neon-accent);
+            font-size: 2rem;
+        }
+
+        .user-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .user-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 0 20px rgba(0, 255, 157, 0.1);
+        }
+
+        .user-card h3 {
+            color: var(--neon-accent);
+            margin-bottom: 1rem;
+        }
+
+        .user-info {
+            margin-bottom: 1rem;
+        }
+
+        .user-info p {
+            margin: 0.5rem 0;
+            color: #ccc;
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .skill-tag {
+            background-color: #333;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--neon-accent);
+        }
+
+        .search-bar {
+            width: 100%;
+            max-width: 300px;
+            padding: 0.8rem;
+            background-color: var(--card-bg);
+            border: 2px solid #333;
+            border-radius: 5px;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: var(--neon-accent);
+        }
+
+        .logout-btn {
+            padding: 0.5rem 1rem;
+            background-color: transparent;
+            border: 2px solid var(--neon-accent);
+            color: var(--neon-accent);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background-color: var(--neon-accent);
+            color: var(--dark-bg);
+        }
+
+        .no-users {
+            text-align: center;
+            color: #ccc;
+            padding: 2rem;
+        }
+
+        .loading {
+            text-align: center;
+            color: var(--neon-accent);
+            padding: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="header">
+            <div class="logo">
+                <h1>Innomate</h1>
+            </div>
+            <div class="controls">
+                <input type="text" id="searchInput" class="search-bar" placeholder="Search by name or skills...">
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+        <div id="loading" class="loading">Loading users...</div>
+        <div id="userGrid" class="user-grid"></div>
+    </div>
+
+    <script>
+        let allUsers = [];
+
+        // Check if user is logged in
+        function checkAuth() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = '/loginpage.html';
+            }
+            return token;
+        }
+
+        // Fetch and display users
+        async function fetchUsers() {
+            const token = checkAuth();
+            try {
+                const response = await fetch('http://localhost:3000/api/users', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch users');
+                }
+
+                const data = await response.json();
+                allUsers = data;
+                displayUsers(data);
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('userGrid').innerHTML = '<div class="no-users">Error loading users</div>';
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+
+        // Display users in the grid
+        function displayUsers(users) {
+            const userGrid = document.getElementById('userGrid');
+            if (!users.length) {
+                userGrid.innerHTML = '<div class="no-users">No users found</div>';
+                return;
+            }
+
+            userGrid.innerHTML = users.map(user => `
+                <div class="user-card">
+                    <h3>${user.name}</h3>
+                    <div class="user-info">
+                        <p><strong>Email:</strong> ${user.email}</p>
+                        <p><strong>Joined:</strong> ${new Date(user.createdAt).toLocaleDateString()}</p>
+                    </div>
+                    <div class="skills-list">
+                        ${user.skills.map(skill => `
+                            <span class="skill-tag">${skill}</span>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filteredUsers = allUsers.filter(user => 
+                user.name.toLowerCase().includes(searchTerm) ||
+                user.skills.some(skill => skill.toLowerCase().includes(searchTerm))
+            );
+            displayUsers(filteredUsers);
+        });
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('token');
+            window.location.href = '/loginpage.html';
+        }
+
+        // Initial load
+        fetchUsers();
+    </script>
+</body>
+</html> 

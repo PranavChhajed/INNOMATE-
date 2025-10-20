@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Innomate - Complete Your Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-accent: #00ff9d;
+            --dark-bg: #121212;
+            --card-bg: #1e1e1e;
+            --progress-width: 0%;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            min-height: 100vh;
+            color: white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: #333;
+        }
+
+        .progress {
+            height: 100%;
+            width: var(--progress-width);
+            background: var(--neon-accent);
+            transition: width 0.3s ease;
+        }
+
+        .wizard-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            flex-grow: 1;
+        }
+
+        .step {
+            display: none;
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 255, 157, 0.1);
+            margin-bottom: 1rem;
+        }
+
+        .step.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .step h2 {
+            color: var(--neon-accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #ccc;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #333;
+            border-radius: 5px;
+            background-color: #2a2a2a;
+            color: white;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--neon-accent);
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .skill-category {
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-category h3 {
+            color: var(--neon-accent);
+            margin-bottom: 1rem;
+        }
+
+        .skill-option {
+            background-color: #333;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            user-select: none;
+        }
+
+        .skill-option:hover {
+            background-color: #444;
+        }
+
+        .skill-option.selected {
+            background-color: var(--neon-accent);
+            color: var(--dark-bg);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .nav-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-prev {
+            background-color: transparent;
+            border: 2px solid var(--neon-accent);
+            color: var(--neon-accent);
+        }
+
+        .btn-next {
+            background-color: var(--neon-accent);
+            color: var(--dark-bg);
+        }
+
+        .btn-prev:hover, .btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(0, 255, 157, 0.3);
+        }
+
+        .interests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .interest-card {
+            background-color: #333;
+            padding: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .interest-card:hover {
+            background-color: #444;
+        }
+
+        .interest-card.selected {
+            background-color: var(--neon-accent);
+            color: var(--dark-bg);
+        }
+
+        .goals-container {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .goal-option {
+            background-color: #333;
+            padding: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .goal-option:hover {
+            background-color: #444;
+        }
+
+        .goal-option.selected {
+            background-color: var(--neon-accent);
+            color: var(--dark-bg);
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar">
+        <div class="progress"></div>
+    </div>
+
+    <div class="wizard-container">
+        <!-- Step 1: Basic Information -->
+        <div class="step active" id="step1">
+            <h2>Tell us about yourself</h2>
+            <div class="form-group">
+                <label for="bio">Brief Bio</label>
+                <textarea id="bio" rows="4" placeholder="Share a bit about yourself..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="education">Education Level</label>
+                <select id="education">
+                    <option value="">Select your education level</option>
+                    <option value="high_school">High School</option>
+                    <option value="undergraduate">Undergraduate</option>
+                    <option value="graduate">Graduate</option>
+                    <option value="phd">PhD</option>
+                    <option value="professional">Professional</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="institution">Institution/Company</label>
+                <input type="text" id="institution" placeholder="Where do you study/work?">
+            </div>
+            <div class="navigation">
+                <div></div>
+                <button class="nav-btn btn-next" onclick="nextStep()">Next</button>
+            </div>
+        </div>
+
+        <!-- Step 2: Areas of Interest -->
+        <div class="step" id="step2">
+            <h2>Select Your Areas of Interest</h2>
+            <div class="interests-grid">
+                <div class="interest-card" onclick="toggleInterest(this)">Technology</div>
+                <div class="interest-card" onclick="toggleInterest(this)">Business</div>
+                <div class="interest-card" onclick="toggleInterest(this)">Design</div>
+                <div class="interest-card" onclick="toggleInterest(this)">Science</div>
+                <div class="interest-card" onclick="toggleInterest(this)">Arts</div>
+                <div class="interest-card" onclick="toggleInterest(this)">Engineering</div>
+                <div class="interest-card" onclick="toggleInterest(this)">Healthcare</div>
+                <div class="interest-card" onclick="toggleInterest(this)">Education</div>
+                <div class="interest-card" onclick="toggleInterest(this)">Marketing</div>
+                <div class="interest-card" onclick="toggleInterest(this)">Finance</div>
+                <div class="interest-card" onclick="toggleInterest(this)">Music</div>
+                <div class="interest-card" onclick="toggleInterest(this)">Sports</div>
+            </div>
+            <div class="navigation">
+                <button class="nav-btn btn-prev" onclick="prevStep()">Previous</button>
+                <button class="nav-btn btn-next" onclick="nextStep()">Next</button>
+            </div>
+        </div>
+
+        <!-- Step 3: Skills -->
+        <div class="step" id="step3">
+            <h2>Select Your Skills</h2>
+            <div class="skill-category">
+                <h3>Programming Languages</h3>
+                <div class="skills-container">
+                    <div class="skill-option" onclick="toggleSkill(this)">Python</div>
+                    <div class="skill-option" onclick="toggleSkill(this)">JavaScript</div>
+                    <div class="skill-option" onclick="toggleSkill(this)">Java</div>
+                    <div class="skill-option" onclick="toggleSkill(this)">C++</div>
+                    <div class="skill-option" onclick="toggleSkill(this)">Ruby</div>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3>Web Development</h3>
+                <div class="skills-container">
+                    <div class="skill-option" onclick="toggleSkill(this)">HTML/CSS</div>
+                    <div class="skill-option" onclick="toggleSkill(this)">React</div>
+                    <div class="skill-option" onclick="toggleSkill(this)">Node.js</div>
+                    <div class="skill-option" onclick="toggleSkill(this)">Angular</div>
+                    <div class="skill-option" onclick="toggleSkill(this)">Vue.js</div>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3>Design</h3>
+                <div class="skills-container">
+                    <div class="skill-option" onclick="toggleSkill(this)">UI/UX</div>
+                    <div class="skill-option" onclick="toggleSkill(this)">Photoshop</div>
+                    <div class="skill-option" onclick="toggleSkill(this)">Illustrator</div>
+                    <div class="skill-option" onclick="toggleSkill(this)">Figma</div>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="nav-btn btn-prev" onclick="prevStep()">Previous</button>
+                <button class="nav-btn btn-next" onclick="nextStep()">Next</button>
+            </div>
+        </div>
+
+        <!-- Step 4: Goals -->
+        <div class="step" id="step4">
+            <h2>What are your goals?</h2>
+            <div class="goals-container">
+                <div class="goal-option" onclick="toggleGoal(this)">
+                    Find project collaborators
+                </div>
+                <div class="goal-option" onclick="toggleGoal(this)">
+                    Join hackathon teams
+                </div>
+                <div class="goal-option" onclick="toggleGoal(this)">
+                    Find a mentor
+                </div>
+                <div class="goal-option" onclick="toggleGoal(this)">
+                    Become a mentor
+                </div>
+                <div class="goal-option" onclick="toggleGoal(this)">
+                    Network with professionals
+                </div>
+                <div class="goal-option" onclick="toggleGoal(this)">
+                    Learn new skills
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="nav-btn btn-prev" onclick="prevStep()">Previous</button>
+                <button class="nav-btn btn-next" onclick="completeOnboarding()">Complete</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 4;
+        const userData = {
+            interests: new Set(),
+            skills: new Set(),
+            goals: new Set()
+        };
+
+        function updateProgress() {
+            const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
+            document.documentElement.style.setProperty('--progress-width', `${progress}%`);
+        }
+
+        function showStep(step) {
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            document.getElementById(`step${step}`).classList.add('active');
+            updateProgress();
+        }
+
+        function nextStep() {
+            if (currentStep < totalSteps) {
+                currentStep++;
+                showStep(currentStep);
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        }
+
+        function toggleInterest(element) {
+            element.classList.toggle('selected');
+            const interest = element.textContent;
+            if (userData.interests.has(interest)) {
+                userData.interests.delete(interest);
+            } else {
+                userData.interests.add(interest);
+            }
+        }
+
+        function toggleSkill(element) {
+            element.classList.toggle('selected');
+            const skill = element.textContent;
+            if (userData.skills.has(skill)) {
+                userData.skills.delete(skill);
+            } else {
+                userData.skills.add(skill);
+            }
+        }
+
+        function toggleGoal(element) {
+            element.classList.toggle('selected');
+            const goal = element.textContent.trim();
+            if (userData.goals.has(goal)) {
+                userData.goals.delete(goal);
+            } else {
+                userData.goals.add(goal);
+            }
+        }
+
+        async function completeOnboarding() {
+            const formData = {
+                preferences: {
+                    bio: document.getElementById('bio').value,
+                    education: document.getElementById('education').value,
+                    institution: document.getElementById('institution').value,
+                    selectedCategories: Array.from(userData.interests),
+                    skills: Array.from(userData.skills),
+                    goals: Array.from(userData.goals)
+                }
+            };
+
+            fetch('http://localhost:4000/api/auth/onboarding', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(res => res.json())
+            .then(data => {
+                window.location.href = 'loginpage.html';
+            })
+            .catch(err => {
+                alert('Failed to save onboarding info. Please try again.');
+            });
+        }
+
+        // Initialize progress bar
+        updateProgress();
+    </script>
+</body>
+</html>

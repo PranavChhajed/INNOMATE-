@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INNOMATE - Connect, Collaborate, Create</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #00ff9d;
+            --secondary-color: #2d3436;
+            --dark-bg: #1a1a1a;
+            --light-text: #ffffff;
+            --card-bg: #2a2a2a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem;
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--light-text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-login {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-signup {
+            background: var(--primary-color);
+            border: none;
+            color: var(--dark-bg);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 157, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(26, 26, 26, 0.8) 100%);
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #ddd;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 1rem;
+        }
+
+        /* Categories Section */
+        .categories {
+            padding: 5rem 2rem;
+            background: var(--card-bg);
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .category-card {
+            background: var(--dark-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 160px;
+            position: relative;
+            overflow: visible;
+            z-index: 1;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            background: var(--dark-bg);
+            color: var(--light-text);
+            z-index: 10;
+        }
+
+        .category-content {
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .category-subcategories {
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            width: calc(100% + 40px);
+            min-height: calc(100% + 40px);
+            background: var(--card-bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: 1.5rem;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.3s;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .category-card:hover .category-content {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        .category-card:hover .category-subcategories {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .subcategories-list {
+            font-size: 0.95rem;
+            color: var(--light-text);
+            text-align: left;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            overflow-y: auto;
+            max-height: 100%;
+        }
+
+        .subcategories-list li {
+            margin-bottom: 0.8rem;
+            position: relative;
+            padding-left: 1.2rem;
+            transition: all 0.2s;
+        }
+
+        .subcategories-list li:hover {
+            color: var(--primary-color);
+            transform: translateX(5px);
+        }
+
+        .subcategories-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-size: 1.2em;
+            line-height: 1;
+        }
+
+        .category-subcategories h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            text-align: left;
+        }
+
+        .view-all {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            text-decoration: none;
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--primary-color);
+            border-radius: 20px;
+            transition: all 0.2s;
+            align-self: flex-start;
+        }
+
+        .view-all:hover {
+            background: var(--primary-color);
+            color: var(--dark-bg);
+        }
+
+        .category-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            transition: transform 0.3s;
+            color: var(--primary-color);
+        }
+
+        .category-card h3 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .categories-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+
+            .category-card {
+                min-height: 140px;
+                padding: 1rem;
+            }
+
+            .category-icon {
+                font-size: 2rem;
+            }
+
+            .category-card h3 {
+                font-size: 1rem;
+            }
+
+            .subcategories-list {
+                font-size: 0.9rem;
+            }
+
+            .category-subcategories {
+                top: -10px;
+                left: -10px;
+                width: calc(100% + 20px);
+                min-height: calc(100% + 20px);
+                padding: 1rem;
+            }
+
+            .view-all {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.8rem;
+            }
+        }
+
+        /* Footer Styles */
+        footer {
+            background: var(--card-bg);
+            padding: 4rem 2rem;
+            margin-top: 4rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            align-items: start;
+            text-align: left;
+        }
+
+        .footer-section h4 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section p {
+            color: #999;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #999;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            color: #999;
+            font-size: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+        }
+
+        /* CTA Section Styles */
+        .cta {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, rgba(0, 255, 157, 0.1) 0%, rgba(0, 255, 157, 0.05) 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="none"/><path d="M0,0 L100,0 L100,100 L0,100 Z" fill="none" stroke="%2300ff9d" stroke-width="0.5" stroke-dasharray="5,5"/></svg>');
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .cta p {
+            font-size: 1.2rem;
+            color: #ddd;
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta .btn-signup {
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .cta .btn-signup::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .cta .btn-signup:hover::before {
+            left: 100%;
+        }
+
+        .cta .btn-signup:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 255, 157, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .cta {
+                padding: 4rem 1.5rem;
+            }
+
+            .cta h2 {
+                font-size: 2rem;
+            }
+
+            .cta p {
+                font-size: 1rem;
+            }
+
+            .cta .btn-signup {
+                padding: 0.8rem 2rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="/" class="logo">INNOMATE</a>
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#categories">Categories</a>
+            <a href="#about">About</a>
+        </div>
+        <div class="auth-buttons">
+            <a href="loginpage.html" class="btn btn-login">Login</a>
+            <a href="signup.html" class="btn btn-signup">Sign Up</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Connect, Collaborate, and Create Together</h1>
+            <p>Join INNOMATE to find like-minded individuals, collaborate on projects, and bring your ideas to life. Whether you're into technology, arts, sports, or business - there's a place for you here.</p>
+            <a href="signup.html" class="btn btn-signup">Get Started</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <h2 class="section-title">Why Choose INNOMATE?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <i class="fas fa-users feature-icon"></i>
+                <h3>Find Your Team</h3>
+                <p>Connect with people who share your interests and complement your skills.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-lightbulb feature-icon"></i>
+                <h3>Bring Ideas to Life</h3>
+                <p>Turn your creative ideas into reality with the right team and resources.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-chart-line feature-icon"></i>
+                <h3>Grow Together</h3>
+                <p>Learn from others, share your knowledge, and develop new skills.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories" id="categories">
+        <h2 class="section-title">Explore Categories</h2>
+        <div class="categories-grid">
+            <div class="category-card">
+                <div class="category-content">
+                    <i class="fas fa-laptop-code category-icon"></i>
+                    <h3>Technology</h3>
+                </div>
+                <div class="category-subcategories">
+                    <h3>Technology</h3>
+                    <ul class="subcategories-list">
+                        <li>Web Development</li>
+                        <li>Mobile Development</li>
+                        <li>AI & Machine Learning</li>
+                        <li>Cloud Computing</li>
+                        <li>Cybersecurity</li>
+                    </ul>
+                    <a href="#" class="view-all">View All →</a>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-content">
+                    <i class="fas fa-basketball-ball category-icon"></i>
+                    <h3>Sports</h3>
+                </div>
+                <div class="category-subcategories">
+                    <h3>Sports</h3>
+                    <ul class="subcategories-list">
+                        <li>Football/Soccer</li>
+                        <li>Basketball</li>
+                        <li>Tennis</li>
+                        <li>Swimming</li>
+                        <li>Martial Arts</li>
+                    </ul>
+                    <a href="#" class="view-all">View All →</a>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-content">
+                    <i class="fas fa-music category-icon"></i>
+                    <h3>Music</h3>
+                </div>
+                <div class="category-subcategories">
+                    <h3>Music</h3>
+                    <ul class="subcategories-list">
+                        <li>Music Production</li>
+                        <li>Sound Engineering</li>
+                        <li>Music Theory</li>
+                        <li>Vocal Training</li>
+                        <li>DJing</li>
+                    </ul>
+                    <a href="#" class="view-all">View All →</a>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-content">
+                    <i class="fas fa-film category-icon"></i>
+                    <h3>Film & Video</h3>
+                </div>
+                <div class="category-subcategories">
+                    <h3>Film & Video</h3>
+                    <ul class="subcategories-list">
+                        <li>Film Direction</li>
+                        <li>Screenwriting</li>
+                        <li>Cinematography</li>
+                        <li>Video Editing</li>
+                        <li>Animation</li>
+                    </ul>
+                    <a href="#" class="view-all">View All →</a>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-content">
+                    <i class="fas fa-palette category-icon"></i>
+                    <h3>Arts & Design</h3>
+                </div>
+                <div class="category-subcategories">
+                    <h3>Arts & Design</h3>
+                    <ul class="subcategories-list">
+                        <li>Graphic Design</li>
+                        <li>UI/UX Design</li>
+                        <li>Digital Art</li>
+                        <li>Illustration</li>
+                        <li>3D Modeling</li>
+                    </ul>
+                    <a href="#" class="view-all">View All →</a>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-content">
+                    <i class="fas fa-chart-pie category-icon"></i>
+                    <h3>Business</h3>
+                </div>
+                <div class="category-subcategories">
+                    <h3>Business</h3>
+                    <ul class="subcategories-list">
+                        <li>Entrepreneurship</li>
+                        <li>Marketing</li>
+                        <li>Finance</li>
+                        <li>Project Management</li>
+                        <li>Business Strategy</li>
+                    </ul>
+                    <a href="#" class="view-all">View All →</a>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-content">
+                    <i class="fas fa-flask category-icon"></i>
+                    <h3>Science</h3>
+                </div>
+                <div class="category-subcategories">
+                    <h3>Science</h3>
+                    <ul class="subcategories-list">
+                        <li>Physics</li>
+                        <li>Chemistry</li>
+                        <li>Biology</li>
+                        <li>Environmental Science</li>
+                        <li>Data Analysis</li>
+                    </ul>
+                    <a href="#" class="view-all">View All →</a>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-content">
+                    <i class="fas fa-pen-fancy category-icon"></i>
+                    <h3>Writing</h3>
+                </div>
+                <div class="category-subcategories">
+                    <h3>Writing</h3>
+                    <ul class="subcategories-list">
+                        <li>Creative Writing</li>
+                        <li>Content Writing</li>
+                        <li>Technical Writing</li>
+                        <li>Journalism</li>
+                        <li>Blogging</li>
+                    </ul>
+                    <a href="#" class="view-all">View All →</a>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-content">
+                    <i class="fas fa-graduation-cap category-icon"></i>
+                    <h3>Education</h3>
+                </div>
+                <div class="category-subcategories">
+                    <h3>Education</h3>
+                    <ul class="subcategories-list">
+                        <li>Teaching</li>
+                        <li>Online Education</li>
+                        <li>STEM Education</li>
+                        <li>Language Teaching</li>
+                        <li>Educational Tech</li>
+                    </ul>
+                    <a href="#" class="view-all">View All →</a>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-content">
+                    <i class="fas fa-gamepad category-icon"></i>
+                    <h3>Gaming</h3>
+                </div>
+                <div class="category-subcategories">
+                    <h3>Gaming</h3>
+                    <ul class="subcategories-list">
+                        <li>Game Development</li>
+                        <li>Game Design</li>
+                        <li>E-Sports</li>
+                        <li>Game Testing</li>
+                        <li>Game Art</li>
+                    </ul>
+                    <a href="#" class="view-all">View All →</a>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-content">
+                    <i class="fas fa-camera category-icon"></i>
+                    <h3>Photography</h3>
+                </div>
+                <div class="category-subcategories">
+                    <h3>Photography</h3>
+                    <ul class="subcategories-list">
+                        <li>Digital Photography</li>
+                        <li>Portrait Photography</li>
+                        <li>Landscape Photography</li>
+                        <li>Photo Editing</li>
+                        <li>Studio Photography</li>
+                    </ul>
+                    <a href="#" class="view-all">View All →</a>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-content">
+                    <i class="fas fa-theater-masks category-icon"></i>
+                    <h3>Performing Arts</h3>
+                </div>
+                <div class="category-subcategories">
+                    <h3>Performing Arts</h3>
+                    <ul class="subcategories-list">
+                        <li>Acting</li>
+                        <li>Dance</li>
+                        <li>Theater</li>
+                        <li>Musical Theater</li>
+                        <li>Stage Production</li>
+                    </ul>
+                    <a href="#" class="view-all">View All →</a>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-content">
+                    <i class="fas fa-leaf category-icon"></i>
+                    <h3>Environment</h3>
+                </div>
+                <div class="category-subcategories">
+                    <h3>Environment</h3>
+                    <ul class="subcategories-list">
+                        <li>Sustainability</li>
+                        <li>Conservation</li>
+                        <li>Renewable Energy</li>
+                        <li>Climate Science</li>
+                        <li>Eco-Innovation</li>
+                    </ul>
+                    <a href="#" class="view-all">View All →</a>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-content">
+                    <i class="fas fa-heartbeat category-icon"></i>
+                    <h3>Health & Wellness</h3>
+                </div>
+                <div class="category-subcategories">
+                    <h3>Health & Wellness</h3>
+                    <ul class="subcategories-list">
+                        <li>Fitness Training</li>
+                        <li>Nutrition</li>
+                        <li>Mental Health</li>
+                        <li>Yoga & Meditation</li>
+                        <li>Healthcare Tech</li>
+                    </ul>
+                    <a href="#" class="view-all">View All →</a>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-content">
+                    <i class="fas fa-utensils category-icon"></i>
+                    <h3>Culinary Arts</h3>
+                </div>
+                <div class="category-subcategories">
+                    <h3>Culinary Arts</h3>
+                    <ul class="subcategories-list">
+                        <li>Cooking</li>
+                        <li>Baking</li>
+                        <li>Food Photography</li>
+                        <li>Recipe Development</li>
+                        <li>Food Business</li>
+                    </ul>
+                    <a href="#" class="view-all">View All →</a>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-content">
+                    <i class="fas fa-video category-icon"></i>
+                    <h3>Video Editing</h3>
+                </div>
+                <div class="category-subcategories">
+                    <h3>Video Editing</h3>
+                    <ul class="subcategories-list">
+                        <li>Post-Production</li>
+                        <li>Motion Graphics</li>
+                        <li>Color Grading</li>
+                        <li>Visual Effects (VFX)</li>
+                        <li>Sound Design</li>
+                    </ul>
+                    <a href="#" class="view-all">View All →</a>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-content">
+                    <i class="fas fa-pencil-alt category-icon"></i>
+                    <h3>Copywriting</h3>
+                </div>
+                <div class="category-subcategories">
+                    <h3>Copywriting</h3>
+                    <ul class="subcategories-list">
+                        <li>Ad Copywriting</li>
+                        <li>Brand Storytelling</li>
+                        <li>SEO Writing</li>
+                        <li>Social Media Copy</li>
+                        <li>Email Marketing</li>
+                    </ul>
+                    <a href="#" class="view-all">View All →</a>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-content">
+                    <i class="fas fa-clapperboard category-icon"></i>
+                    <h3>Movies</h3>
+                </div>
+                <div class="category-subcategories">
+                    <h3>Movies</h3>
+                    <ul class="subcategories-list">
+                        <li>Film Production</li>
+                        <li>Script Development</li>
+                        <li>Movie Direction</li>
+                        <li>Film Analysis</li>
+                        <li>Film Distribution</li>
+                    </ul>
+                    <a href="#" class="view-all">View All →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="cta-content">
+            <h2>Ready to Start Your Journey?</h2>
+            <p>Join thousands of creators and innovators on INNOMATE. Connect with like-minded individuals, collaborate on exciting projects, and bring your ideas to life.</p>
+            <a href="signup.html" class="btn btn-signup">Join Now</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About INNOMATE</h4>
+                <p>INNOMATE is a platform that connects creative minds, fostering collaboration and innovation across various fields. Join our community to bring your ideas to life.</p>
+                <div class="social-links">
+                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#categories">Categories</a></li>
+                    <li><a href="loginpage.html">Login</a></li>
+                    <li><a href="signup.html">Sign Up</a></li>
+                    <li><a href="#about">About Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Community Guidelines</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Support</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 INNOMATE. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Navbar background change on scroll
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(26, 26, 26, 0.98)';
+            } else {
+                nav.style.background = 'rgba(26, 26, 26, 0.95)';
+            }
+        });
+    </script>
+</body>
+</html> 

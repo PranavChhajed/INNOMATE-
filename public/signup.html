@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Innomate - Sign Up</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #00ff9d;
+            --secondary-color: #000000;
+            --dark-bg: #000000;
+            --light-text: #ffffff;
+            --card-bg: #000000;
+            --neon-shadow: 0 0 10px rgba(0, 255, 157, 0.3);
+            --neon-glow: 0 0 20px rgba(0, 255, 157, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            background: black;
+            position: relative;
+            overflow: auto;
+            padding: 2rem 0;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="none"/><path d="M0,0 L100,0 L100,100 L0,100 Z" fill="none" stroke="%2300ff9d" stroke-width="0.5" stroke-dasharray="5,5"/></svg>');
+            opacity: 0.15;
+            z-index: 0;
+        }
+
+        .signup-container {
+            position: relative;
+            z-index: 1;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 255, 157, 0.2);
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 157, 0.2);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #ccc;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(0, 255, 157, 0.3);
+            border-radius: 8px;
+            color: var(--light-text);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: var(--neon-shadow);
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .skill-tag {
+            background-color: #333;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-tag button {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .password-requirements {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(0, 255, 157, 0.2);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            color: #ddd;
+            box-shadow: var(--neon-shadow);
+        }
+
+        .signup-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary-color);
+            border: none;
+            border-radius: 8px;
+            color: var(--dark-bg);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            box-shadow: var(--neon-shadow);
+        }
+
+        .signup-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--neon-glow);
+            background: #00ff9d;
+        }
+
+        .social-icons a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(0, 255, 157, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-icons a:hover {
+            background: var(--primary-color);
+            color: var(--dark-bg);
+            transform: translateY(-3px);
+            box-shadow: var(--neon-shadow);
+        }
+
+        .terms-conditions a, .login-link a {
+            color: var(--primary-color);
+            text-shadow: 0 0 5px rgba(0, 255, 157, 0.3);
+        }
+
+        .terms-conditions a:hover, .login-link a:hover {
+            color: #00ff9d;
+            text-shadow: var(--neon-shadow);
+        }
+
+        .error-message {
+            color: #ff4444;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .success-message {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+            text-align: center;
+        }
+
+        .success-message a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .success-message a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <div class="logo">
+            <h1>Innomate</h1>
+        </div>
+        <form id="signupForm">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+            </div>
+            <div class="form-group">
+                <label for="skills">Skills (Press Enter to add)</label>
+                <input type="text" id="skills" placeholder="e.g., Python, JavaScript, Design">
+                <div class="skills-container" id="skillsContainer"></div>
+            </div>
+            <button type="submit" class="signup-btn">Sign Up</button>
+            <div class="error-message" id="errorMessage"></div>
+            <div class="success-message" id="successMessage">
+                Account created successfully! <a href="loginpage.html">Click here to login</a>
+            </div>
+        </form>
+        <div class="login-link">
+            Already have an account? <a href="http://localhost:4000/loginpage.html">Login</a>
+        </div>
+    </div>
+
+    <script>
+        const skillsInput = document.getElementById('skills');
+        const skillsContainer = document.getElementById('skillsContainer');
+        const signupForm = document.getElementById('signupForm');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+        const skills = new Set();
+
+        // Handle skills input
+        skillsInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const skill = skillsInput.value.trim();
+                if (skill && !skills.has(skill)) {
+                    skills.add(skill);
+                    addSkillTag(skill);
+                    skillsInput.value = '';
+                }
+            }
+        });
+
+        function addSkillTag(skill) {
+            const tag = document.createElement('div');
+            tag.className = 'skill-tag';
+            tag.innerHTML = `
+                ${skill}
+                <button type="button" onclick="removeSkill('${skill}')">&times;</button>
+            `;
+            skillsContainer.appendChild(tag);
+        }
+
+        window.removeSkill = (skill) => {
+            skills.delete(skill);
+            const tag = document.querySelector(`.skill-tag:contains('${skill}')`);
+            if (tag) tag.remove();
+        };
+
+        // Handle form submission
+        signupForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Basic validation
+            if (!name || !email || !password || !confirmPassword) {
+                errorMessage.textContent = 'Please fill in all required fields';
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                errorMessage.textContent = 'Passwords do not match';
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            if (password.length < 6) {
+                errorMessage.textContent = 'Password must be at least 6 characters long';
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:4000/api/auth/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        fullname: name.trim(),
+                        email: email.trim(),
+                        password,
+                        skills: Array.from(skills)
+                    })
+                });
+
+                let data;
+                const contentType = response.headers.get('content-type');
+                if (contentType && contentType.includes('application/json')) {
+                    data = await response.json();
+                } else {
+                    throw new Error('Server response was not JSON');
+                }
+
+                if (response.ok) {
+                    // Show success message
+                    successMessage.style.display = 'block';
+                    // Clear form
+                    signupForm.reset();
+                    skillsContainer.innerHTML = '';
+                    skills.clear();
+                    
+                    // Redirect to login page after short delay
+                    setTimeout(() => {
+                        window.location.href = 'http://localhost:4000/loginpage.html';
+                    }, 1500);
+                } else {
+                    errorMessage.textContent = data.message || 'An error occurred during signup';
+                    errorMessage.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Signup error:', error);
+                errorMessage.textContent = 'An error occurred during signup. Please try again.';
+                errorMessage.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html> 

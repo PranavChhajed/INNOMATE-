@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - INNOMATE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #00ff9d;
+            --secondary-color: #000000;
+            --dark-bg: #000000;
+            --light-text: #ffffff;
+            --card-bg: rgba(0, 0, 0, 0.8);
+            --neon-shadow: 0 0 10px rgba(0, 255, 157, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+            line-height: 1.6;
+        }
+
+        .profile-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 15px;
+            border: 1px solid rgba(0, 255, 157, 0.2);
+            box-shadow: var(--neon-shadow);
+        }
+
+        .profile-picture {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 3px solid var(--primary-color);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .profile-picture img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-picture .edit-icon {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: var(--primary-color);
+            color: var(--dark-bg);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-info h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-section {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 15px;
+            border: 1px solid rgba(0, 255, 157, 0.2);
+            box-shadow: var(--neon-shadow);
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .edit-btn {
+            background: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .edit-btn:hover {
+            background: var(--primary-color);
+            color: var(--dark-bg);
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .skill-tag {
+            background: rgba(0, 255, 157, 0.1);
+            color: var(--primary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(0, 255, 157, 0.3);
+        }
+
+        .experience-item, .education-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .experience-item:last-child, .education-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .date {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .company, .school {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .position, .degree {
+            color: #999;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-picture {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-picture">
+                <img src="https://via.placeholder.com/200" alt="Profile Picture" id="profilePic">
+                <div class="edit-icon" onclick="document.getElementById('imageUpload').click()">
+                    <i class="fas fa-camera"></i>
+                </div>
+                <input type="file" id="imageUpload" hidden accept="image/*">
+            </div>
+            <div class="profile-info">
+                <h1 id="userName">John Doe</h1>
+                <p id="userTitle">Software Engineer</p>
+            </div>
+        </div>
+
+        <div class="profile-section">
+            <div class="section-title">
+                <h2>Education</h2>
+                <button class="edit-btn" onclick="editEducation()">
+                    <i class="fas fa-edit"></i> Edit
+                </button>
+            </div>
+            <div id="educationList">
+                <div class="education-item">
+                    <div class="date">2018 - 2022</div>
+                    <div class="school">Stanford University</div>
+                    <div class="degree">Bachelor of Science in Computer Science</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-section">
+            <div class="section-title">
+                <h2>Skills</h2>
+                <button class="edit-btn" onclick="editSkills()">
+                    <i class="fas fa-edit"></i> Edit
+                </button>
+            </div>
+            <div class="skills-list" id="skillsList">
+                <span class="skill-tag">JavaScript</span>
+                <span class="skill-tag">React</span>
+                <span class="skill-tag">Node.js</span>
+                <span class="skill-tag">Python</span>
+                <span class="skill-tag">UI/UX Design</span>
+            </div>
+        </div>
+
+        <div class="profile-section">
+            <div class="section-title">
+                <h2>Experience</h2>
+                <button class="edit-btn" onclick="editExperience()">
+                    <i class="fas fa-edit"></i> Edit
+                </button>
+            </div>
+            <div id="experienceList">
+                <div class="experience-item">
+                    <div class="date">2022 - Present</div>
+                    <div class="company">Google</div>
+                    <div class="position">Senior Software Engineer</div>
+                    <p>Led development of key features for Google Cloud Platform, improving system efficiency by 40%.</p>
+                </div>
+                <div class="experience-item">
+                    <div class="date">2020 - 2022</div>
+                    <div class="company">Microsoft</div>
+                    <div class="position">Software Engineer</div>
+                    <p>Developed and maintained core components of Microsoft Azure's cloud infrastructure.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Profile Picture Upload
+        document.getElementById('imageUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profilePic').src = e.target.result;
+                    // Here you would typically upload the image to your server
+                    uploadProfilePicture(file);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Function to upload profile picture to server
+        async function uploadProfilePicture(file) {
+            try {
+                const formData = new FormData();
+                formData.append('profilePicture', file);
+                
+                const response = await fetch('/api/profile/upload-picture', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to upload profile picture');
+                }
+
+                const data = await response.json();
+                console.log('Profile picture uploaded successfully:', data);
+            } catch (error) {
+                console.error('Error uploading profile picture:', error);
+                alert('Failed to upload profile picture. Please try again.');
+            }
+        }
+
+        // Edit functions
+        function editEducation() {
+            // Implement education editing logic
+            console.log('Editing education');
+        }
+
+        function editSkills() {
+            // Implement skills editing logic
+            console.log('Editing skills');
+        }
+
+        function editExperience() {
+            // Implement experience editing logic
+            console.log('Editing experience');
+        }
+
+        // Load user profile data when page loads
+        async function loadUserProfile() {
+            try {
+                const response = await fetch('/api/profile', {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to load profile');
+                }
+
+                const profile = await response.json();
+                
+                // Update UI with profile data
+                document.getElementById('userName').textContent = profile.name;
+                document.getElementById('userTitle').textContent = profile.title;
+                document.getElementById('profilePic').src = profile.profilePicture || 'https://via.placeholder.com/200';
+                
+                // Update education, skills, and experience sections
+                updateEducation(profile.education);
+                updateSkills(profile.skills);
+                updateExperience(profile.experience);
+            } catch (error) {
+                console.error('Error loading profile:', error);
+                alert('Failed to load profile data. Please refresh the page.');
+            }
+        }
+
+        // Helper functions to update UI sections
+        function updateEducation(education) {
+            const educationList = document.getElementById('educationList');
+            educationList.innerHTML = education.map(edu => `
+                <div class="education-item">
+                    <div class="date">${edu.startYear} - ${edu.endYear}</div>
+                    <div class="school">${edu.school}</div>
+                    <div class="degree">${edu.degree}</div>
+                </div>
+            `).join('');
+        }
+
+        function updateSkills(skills) {
+            const skillsList = document.getElementById('skillsList');
+            skillsList.innerHTML = skills.map(skill => `
+                <span class="skill-tag">${skill}</span>
+            `).join('');
+        }
+
+        function updateExperience(experience) {
+            const experienceList = document.getElementById('experienceList');
+            experienceList.innerHTML = experience.map(exp => `
+                <div class="experience-item">
+                    <div class="date">${exp.startDate} - ${exp.endDate}</div>
+                    <div class="company">${exp.company}</div>
+                    <div class="position">${exp.position}</div>
+                    <p>${exp.description}</p>
+                </div>
+            `).join('');
+        }
+
+        // Load profile data when page loads
+        document.addEventListener('DOMContentLoaded', loadUserProfile);
+    </script>
+</body>
+</html> 
